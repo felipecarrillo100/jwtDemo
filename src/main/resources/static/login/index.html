@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+
+<body>
+<form id="loginform">
+    <label for="user-id">User:</label>
+    <input id="user-id" type="text" name="user">
+    <label for="password-id">Password:</label>
+    <input id="password-id" type="password" name="password">
+    <button type="submit">Login</button>
+</form>
+<script>
+    const userElement = document.getElementById("user-id");
+    const passwordElement = document.getElementById("password-id");
+
+    const form = document.getElementById('loginform');
+    form.addEventListener('submit', logSubmit);
+
+    function sendLogin(formData) {
+        var data = "user="+ formData.user+"&password="+formData.password+"";
+
+        var xhr = new XMLHttpRequest();
+        xhr.withCredentials = true;
+
+        xhr.addEventListener("readystatechange", function() {
+            if(this.readyState === 4) {
+                console.log(this.responseText);
+                var user = JSON.parse(this.responseText);
+                if (user.token) {
+                    console.log("Successful login")
+                } else {
+                    alert("Authentication Error");
+                    userElement.value = "";
+                    passwordElement.value = "";
+                }
+            }
+        });
+
+        xhr.open("POST", "../user");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.send(data);
+    }
+
+    function logSubmit(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        let formEvent = event.target;
+        const formData = {
+            user: userElement.value,
+            password: passwordElement.value,
+        }
+        sendLogin(formData);
+    }
+
+
+</script>
+</body>
+</html>
