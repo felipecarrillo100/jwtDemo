@@ -35,6 +35,13 @@ public class UserController {
         return user;
     }
 
+    @GetMapping("/logoutpage")
+    public String loginOut(HttpServletResponse response) {
+        // create a cookie
+        JWTTools.clearCookie(response);
+        return "logout";
+    }
+
     @GetMapping("/secured/token")
     public User token(HttpServletRequest request) {
         String jwt = JWTTools.getTokenFromCookies(request);

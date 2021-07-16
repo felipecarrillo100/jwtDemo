@@ -30,6 +30,7 @@ public class JwtDemoApplication {
                     .authorizeRequests()
                     .antMatchers(HttpMethod.GET, "/public/**").permitAll()
                     .antMatchers(HttpMethod.GET, "/login/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/logoutpage").permitAll()
                     .antMatchers(HttpMethod.POST, "/user").permitAll()
                     .anyRequest().authenticated();
         }

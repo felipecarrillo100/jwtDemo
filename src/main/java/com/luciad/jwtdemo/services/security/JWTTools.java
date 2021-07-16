@@ -81,6 +81,13 @@ public class JWTTools {
         } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
             return oldToken;
         }
+    }
 
+    public static void clearCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("JWTSESSION", "");
+        cookie.setPath("/secured");
+        cookie.setMaxAge(0);
+        //add cookie to response
+        response.addCookie(cookie);
     }
 }
